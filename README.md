@@ -6,5 +6,5 @@ Usually virtual environments should NOT be kept on github repositories.
 
 - Get your accounts cookies and store in a file locally named cookies.txt
 - Store videos in mp4 format locally.
+- Install ImageMagick `brew install imagemagick`
 - run `python3 -m tiktok-incubator`
-- Done!
