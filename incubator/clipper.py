@@ -118,33 +118,3 @@ def generate_audio_text(fulltext: List[str]):
         text_comp.append(text_clip)
 
     return audio_comp, text_comp
-
-
-if __name__ == '__main__':
-
-    console = Console()
-    banner = pyfiglet.figlet_format(text='AutoClip', font='rectangles')
-    console.print()
-    console.print("[bold][red1]" + banner)
-    console.print("[dark_red] By Abhishta (github.com/abhishtagatya)")
-
-    if not os.path.exists("temp_assets"):
-        os.mkdir("temp_assets")
-
-    video_background_file = "butthole.mp4" # Your video background file
-    video_background_offset = random.randint(0, 5000) # Starting Position of Video : 0 for Beginning
-    image_banner_file = "lumbarmri.jpeg" # Your image banner file
-    output_file = "AutoClip_Out.mp4" # The output filename
-
-    content = """fatty poom poom 
-    sir your butthole looks like daniel face 
-    very cute and sexy eat my butthole"""
-
-    console.print("\n\n[light_green] Task Starting\n\n")
-    clip(content=content, 
-         video_file=video_background_file, 
-         image_file=image_banner_file,
-         outfile=output_file, 
-         offset=video_background_offset)
-
-    console.print("\n\n[light_green] Completed!")

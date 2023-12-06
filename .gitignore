@@ -1,5 +1,8 @@
 *cookies.txt
 *.mp4
+*.mp3
+*.jpg
+*.png
 venv
 .idea
 # Created by https://www.toptal.com/developers/gitignore/api/macos,jetbrains,python,pycharm
