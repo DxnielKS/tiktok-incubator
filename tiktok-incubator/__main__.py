@@ -1,3 +1,5 @@
+import os
+
 from tiktok_uploader.upload import upload_video, upload_videos
 from tiktok_uploader.auth import AuthBackend
 import tiktok_uploader
@@ -7,13 +9,13 @@ tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=
 
 def upload_local_video(video_name):
     """Function to take in a video stored locally """
-    upload_video(f'../{video_name}.mp4',
+    upload_video(f'videos/{video_name}.mp4',
                  description='this is my description',
                  cookies='cookies.txt'
                  )
 
 def main():
-    print('hello world')
+    upload_local_video('video')
 
 
 if __name__=="__main__":
