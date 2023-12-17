@@ -98,7 +98,7 @@ def generate_audio_text(fulltext: List[str]):
         if text == "":
             continue
             
-        audio_file = f"temp_assets/audio_{idx}.mp3"
+        audio_file = f"temp-assets/audio_{idx}.mp3"
         generate_speech(text.strip(), filename=audio_file)
 
         audio_duration = AudioFileClip(audio_file).duration

@@ -24,38 +24,45 @@ def main():
     console.print("[bold][red1]" + banner)
     console.print("[dark_red] By Abhishta (github.com/abhishtagatya)")
 
-    if not os.path.exists("temp_assets"):
-        os.mkdir("temp_assets")
+    if not os.path.exists("temp-assets"):
+        os.mkdir("temp-assets")
 
     video_background_file = "raw-videos/background.mp4"  # Your video background file
     video_background_offset = random.randint(0, 5000)  # Starting Position of Video : 0 for Beginning
     image_banner_file = "OIP.jpg"  # Your image banner file
     output_file = "final-videos/video.mp4"  # The output filename
 
-    content = """The story of my red penis is a tale of mystery and adventure,
-    a quest filled with juvenile confusion and dangerously high levels of awkwardness.
-    In the winter after I turned 21, I started to find dead skin on my underwear.
-    Every day I would notice more and more accumulating there, along with increasing itchiness in the area of my perineum where that skin was coming from.
-    Since the region was not visible to my eye, I never noticed the patch of red, irritated skin I had there, but after putting up with the discomfort for a while I figured it was time to do something about it. I pluck up the courage and, with this symptom under my belt, went to my first doctor ready to face the awkwardness.
-    Because the problem was located in the genital area, I figured the right doctor to see was a urologist.
-    I felt a bit anxious coming to the appointment. I guess most people wouldn’t be thrilled by the idea of having their genitals examined either,
-    but bear in mind that, back then, I was a 21-year-old virgin with no sexual experience whatsoever. My penis had remained concealed for many years,
-    kept secret like the Ark of the Covenant waiting for an Indiana Jones to discover it. I had always pictured someone a bit different to show my penis to for the first time,
-    but I guess a short-winded, 60-year-old doctor with tired analytical eyes and a shaky hand would have to do.
-    He asked me to drop my pants and lie down, and instructed me to move my penis right and left like a joystick,
-    then my testicles, in order to expose the whole affected area.
-    As I stood back up, pulling up my pants, my face still red from the embarrassment,
-    he passed a disappointing sentence.
-    “This is a skin problem, I can’t really help you with that. You should see a dermatologist”. Like a teenage girl with daddy issues, I had given away my flower to the wrong guy. That same evening I looked for a dermatologist and made the second of a large list of doctor appointments.
-    My first visit to the dermatologist came a few days later.
-    The fact that it was the second time going through such a process made it only slightly less awkward.
-    He prescribed some lotions for me and scheduled a second visit the following week.
-    The lotions didn’t do anything, so on my second visit he took another look at it and wrote me a prescription for a new lotion.
-    Seven days later my skin is the same, and I’m walking to my third appointment with this guy wondering whether he is really just a creep that’s writing me prescriptions for placebo to get to see my dick every week.
-    So I’m there, pants down, exposing my privates once again,
-    and this time the doctor notices a new patch of dry skin a bit further up,
-    on the base of my penis.
-    He takes a sample of the skin there to get it sent to the laboratory, and it turns out to be a genital wart."""
+    content = """I (26 F) have a pretty close group of friends.
+    We have this one girl in our group, Sadie (27 F).
+    She has a disability that is mostly manageable through medication.
+    Despite this, Sadie has a bad habit of ‘forgetting’ to take her pills right before we do something she isn’t interested in doing.
+    This time, it was on a group trip we’ve been planning for over a year.
+    Due to how high the cost of the trip was, we each decided to take a day and plan an activity that the whole group would participate in.
+    We also rented a van together to get to our destination as that was the most ideal situation.
+    The first issue with Sadie came up when getting to our destination.
+    Due to the length of the drive, everyone was going to be driving an hour to get to our destination.
+    Right before it was Sadie’s turn, she had a flare up, and could not drive. Our friend took over.
+    The next morning, my friend had planned a tour of the town.
+    We all reminded Sadie several times to take her medication as this was an expensive tour and we did not want it to be cut short.
+    Well, she had forgotten and the tour had to be cut short.
+    This is when I got genuinely upset because this was now my money being wasted.
+    Throughout the week, she had flare ups pretty often.The actual fight that led to this post occurred on my day though.
+    The previous day, Sadie had had no flare ups. (It was also her day to plan).
+    This was because she had set alarms to take her medication regularly so that she would be ok.
+    We all reminded her to please take her pills like that again.
+    I decided to take all my friends on a trail ride on horses as the trails in this town are known for being absolutely beautiful.
+    We paid extra for a basics lesson prior to the trail.
+    In the basics lesson, we were all paired off based on experience and performance in the small arena that they had.
+    I was paired with Sadie.
+    Well, 1/4th of the way through the trail, she started having a flare up.
+    I told her that I would not be turning around as this was expensive and that I was truly looking forward to this.
+    She begged me to turn around. Finally, the ranger told us that I had to turn around with her as she was my partner.
+    In the car, I told her that she knew how important this was to me and that she just should’ve taken the pills.
+    She told me that I was being ableist and that I didn’t know what the pills did to her.
+    We got into a huge argument in which I said “if your disability can’t take being a good friend, then maybe you shouldn’t come on these trips anyway.”
+    While I agree that it was harsh, I didn’t think I was in the wrong considering that she had cost us so much money over the years for simply not wanting to do something.
+    My other friends agree that Sadie is inconvenient at times but that I should’ve been more sensitive to her condition.
+    I’m honestly torn on whether to apologize or not."""
 
     console.print("\n\n[light_green] Task Starting\n\n")
     clip(content=content,
