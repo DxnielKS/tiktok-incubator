@@ -5,6 +5,10 @@
 *.png
 venv
 .idea
+raw-videos
+temp-assets
+story-lines
+final-videos
 # Created by https://www.toptal.com/developers/gitignore/api/macos,jetbrains,python,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,jetbrains,python,pycharm
 
