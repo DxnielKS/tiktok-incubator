@@ -1,4 +1,5 @@
 import os
+import subprocess
 import random
 from typing import List, Tuple
 
@@ -27,8 +28,13 @@ def generate_speech(
     lang: str - Language of text
     filename: str - Filename of output
     """
+
     myobj = gTTS(text=text, lang=lang, slow=False, tld='ca') # Change per settings https://gtts.readthedocs.io/en/latest/module.html
     myobj.save(filename)
+
+    # session_id = 'b69d2c3b00fd00f3ab86566ef73aaef8'
+    # command = f"python3 incubator/tiktoktts.py -v en_male_narration -f {text} -n {filename} --session {session_id}"
+    # subprocess.run(command, check=True, shell=True)
     return
 
 
@@ -95,11 +101,20 @@ def generate_audio_text(fulltext: List[str]):
     text_comp = []
 
     for idx, text in track(enumerate(fulltext), description='Synthesizing Audio...'):
+
         if text == "":
             continue
+
+        # text_file = f"story-lines/line_{idx}.txt"
+
+        # make text file with line
+        # with open(text_file, '+w') as line:
+        #     line.write(text)
             
         audio_file = f"temp_assets/audio_{idx}.mp3"
-        generate_speech(text.strip(), filename=audio_file)
+
+        # with open(text_file, 'r') as line:
+        generate_speech(text=text, filename=audio_file)
 
         audio_duration = AudioFileClip(audio_file).duration
 

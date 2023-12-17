@@ -32,30 +32,18 @@ def main():
     image_banner_file = "OIP.jpg"  # Your image banner file
     output_file = "final-videos/video.mp4"  # The output filename
 
-    content = """The story of my red penis is a tale of mystery and adventure,
-    a quest filled with juvenile confusion and dangerously high levels of awkwardness.
-    In the winter after I turned 21, I started to find dead skin on my underwear.
-    Every day I would notice more and more accumulating there, along with increasing itchiness in the area of my perineum where that skin was coming from.
-    Since the region was not visible to my eye, I never noticed the patch of red, irritated skin I had there, but after putting up with the discomfort for a while I figured it was time to do something about it. I pluck up the courage and, with this symptom under my belt, went to my first doctor ready to face the awkwardness.
-    Because the problem was located in the genital area, I figured the right doctor to see was a urologist.
-    I felt a bit anxious coming to the appointment. I guess most people wouldn’t be thrilled by the idea of having their genitals examined either,
-    but bear in mind that, back then, I was a 21-year-old virgin with no sexual experience whatsoever. My penis had remained concealed for many years,
-    kept secret like the Ark of the Covenant waiting for an Indiana Jones to discover it. I had always pictured someone a bit different to show my penis to for the first time,
-    but I guess a short-winded, 60-year-old doctor with tired analytical eyes and a shaky hand would have to do.
-    He asked me to drop my pants and lie down, and instructed me to move my penis right and left like a joystick,
-    then my testicles, in order to expose the whole affected area.
-    As I stood back up, pulling up my pants, my face still red from the embarrassment,
-    he passed a disappointing sentence.
-    “This is a skin problem, I can’t really help you with that. You should see a dermatologist”. Like a teenage girl with daddy issues, I had given away my flower to the wrong guy. That same evening I looked for a dermatologist and made the second of a large list of doctor appointments.
-    My first visit to the dermatologist came a few days later.
-    The fact that it was the second time going through such a process made it only slightly less awkward.
-    He prescribed some lotions for me and scheduled a second visit the following week.
-    The lotions didn’t do anything, so on my second visit he took another look at it and wrote me a prescription for a new lotion.
-    Seven days later my skin is the same, and I’m walking to my third appointment with this guy wondering whether he is really just a creep that’s writing me prescriptions for placebo to get to see my dick every week.
-    So I’m there, pants down, exposing my privates once again,
-    and this time the doctor notices a new patch of dry skin a bit further up,
-    on the base of my penis.
-    He takes a sample of the skin there to get it sent to the laboratory, and it turns out to be a genital wart."""
+    content = """Dated a girl for a short period that clearly had trust issues.
+    Every time she came to my place the first thing she would do as soon as I went to the restroom was check my browser history on my PC.
+    If I had a trace of porn or even looked at a Facebook profile of another female it was all out war.
+    Finally had enough.
+    She didn't drive so my dumb ass had to drive home this psycho after breaking up with her.
+    She was kicking and screaming the entire drive.
+    She tried to jump out of the car multiple times while going 65.
+    About a month after that I was seeing a new girl in St Louis. Drove down to see her multiple times.
+    One of my drives home the psycho ex kept calling and texting.
+    She somehow found out I was with a new girl (had her blocked on everything I could think of).
+    She sent threatening texts and then sent nudes and kept leaving voice messages just screaming obscenities and messages telling me she was pregnant.
+    My service provider at the time didn't allow me to block numbers for some reason so I switched providers and got a new number."""
 
     console.print("\n\n[light_green] Task Starting\n\n")
     clip(content=content,

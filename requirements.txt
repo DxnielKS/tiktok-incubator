@@ -4,3 +4,5 @@ moviepy==1.0.3
 pyfiglet==0.8.post1
 rich==13.4.2
 pillow==9.5.0
+playsound==1.3.0
+requests==2.25.1
