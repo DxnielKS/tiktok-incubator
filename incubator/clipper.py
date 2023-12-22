@@ -4,8 +4,6 @@ from typing import List, Tuple
 
 from moviepy.config import change_settings
 
-
-from gtts import gTTS
 from moviepy.editor import (
     CompositeVideoClip, CompositeAudioClip,
     VideoFileClip, AudioFileClip, ImageClip, TextClip,
@@ -22,13 +20,28 @@ def generate_speech(
         lang: str = 'en', 
         filename: str = 'audio.mp3'):
     """
-    Generate Speech Audio from gTTS
+    Generate Speech Audio from ElevenLabs
     text: str - Text to be synthesized
     lang: str - Language of text
     filename: str - Filename of output
     """
-    myobj = gTTS(text=text, lang=lang, slow=False, tld='ca') # Change per settings https://gtts.readthedocs.io/en/latest/module.html
-    myobj.save(filename)
+
+    from elevenlabs import generate, play, save
+
+    from elevenlabs import set_api_key
+
+    API_KEY = os.environ.get('ELEVENLABS_API_KEY')
+
+    set_api_key(API_KEY)
+
+    audio = generate(
+    text=text,
+    voice="Adam",
+    model="eleven_multilingual_v2"
+    )
+
+    save(audio, filename=filename)
+
     return
 
 
