@@ -4,6 +4,7 @@
 *.jpg
 *.png
 venv
+.env
 .idea
 raw-videos
 temp-assets
