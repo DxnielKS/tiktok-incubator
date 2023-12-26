@@ -62,3 +62,4 @@ wcwidth==0.2.12
 webdriver-manager==4.0.1
 websockets==12.0
 wsproto==1.2.0
+bardapi==0.1.23a

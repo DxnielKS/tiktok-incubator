@@ -4,6 +4,17 @@ from typing import List, Tuple
 
 from moviepy.config import change_settings
 
+from gtts import gTTS
+from elevenlabs import generate, save
+from elevenlabs import set_api_key
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY = os.environ.get('ELEVENLABS_API_KEY')
+
+set_api_key(API_KEY)
+
 from moviepy.editor import (
     CompositeVideoClip, CompositeAudioClip,
     VideoFileClip, AudioFileClip, ImageClip, TextClip,
@@ -26,22 +37,13 @@ def generate_speech(
     filename: str - Filename of output
     """
 
-    from elevenlabs import generate, play, save
-
-    from elevenlabs import set_api_key
-
-    API_KEY = os.environ.get('ELEVENLABS_API_KEY')
-
-    set_api_key(API_KEY)
-
-    audio = generate(
-    text=text,
-    voice="Adam",
-    model="eleven_multilingual_v2"
-    )
-
-    save(audio, filename=filename)
-
+    # audio = generate(
+    # text=text,
+    # voice="Adam",
+    # model="eleven_multilingual_v2"
+    # )
+    #
+    # save(audio, filename=filename)
     return
 
 
@@ -49,7 +51,8 @@ def clip(
         content: str, 
         video_file: str, 
         outfile: str, 
-        image_file: str = '', 
+        image_file: str = '',
+        title: str = '',
         offset: int = 0, 
         duration: int = 0):
     """
@@ -79,9 +82,9 @@ def clip(
     vid_clip = vid_clip.resize((1980, 1280))
     vid_clip = vid_clip.crop(x_center=1980 / 2, y_center=1280 / 2, width=720, height=1280)
 
-    if image_file != '':
-        image_clip = ImageClip(image_file).set_duration(duration).set_position(("center", 'center')).resize(0.8) # Adjust if the Banner is too small
-        vid_clip = CompositeVideoClip([vid_clip, image_clip])
+    # if image_file != '':
+    #     image_clip = ImageClip(image_file).set_duration(duration).set_position(("center", 'center')).resize(0.8) # Adjust if the Banner is too small
+    #     vid_clip = CompositeVideoClip([vid_clip, image_clip])
 
     vid_clip = CompositeVideoClip([vid_clip, concatenate_videoclips(text_comp).set_position(('center', 860))])
 
@@ -90,13 +93,18 @@ def clip(
     vid_clip.close()
 
 
-def split_text(text: str, delimiter: str = '\n'):
+def split_text(text: str):
     """
     Split the Text
     text: str - Text to split
     delimiter: str - Delimiter of split (default: \n)
     """
-    return text.split(delimiter)
+    delimiters = ['\n', ',', ';', '.']
+    for delimiter in delimiters:
+        text = text.replace(delimiter, ' ')
+    result = text.split()
+
+    return result
 
 
 def generate_audio_text(fulltext: List[str]):
@@ -116,14 +124,18 @@ def generate_audio_text(fulltext: List[str]):
 
         audio_duration = AudioFileClip(audio_file).duration
 
+        # Enhanced styling for the text
         text_clip = TextClip(
             text,
-            font='Arial', # Change Font if not found
-            fontsize=32,
+            font='Poppins Bold',  # Ensure Poppins font is installed
+            fontsize=64,
             color="white",
+            stroke_color="black",  # Add stroke for better readability
+            stroke_width=3,
             align='center',
             method='caption',
-            size=(660, None)
+            size=(660, None),
+            bg_color='transparent'  # Background color
         )
         text_clip = text_clip.set_duration(audio_duration)
 
