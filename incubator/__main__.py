@@ -62,13 +62,13 @@ def post_next_story():
 
     console.print("\n\n[light_green] Video Generation Started!\n\n")
 
-    clip(content=content,
-         title=title,
-         video_file=video_background_file,
-         # image_file=image_banner_file,
-         outfile=output_file,
-         offset=video_background_offset,
-        )
+    # clip(content=content,
+    #      title=title,
+    #      video_file=video_background_file,
+    #      # image_file=image_banner_file,
+    #      outfile=output_file,
+    #      offset=video_background_offset,
+    #     )
 
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
@@ -98,7 +98,7 @@ def schedule_tasks_for_day():
     # for time_str in random_times_tomorrow:
     #     schedule.every().day.at(time_str).do(post_next_story)
 
-    schedule.every().day.at('22:11').do(post_next_story)
+    schedule.every().day.at('22:21').do(post_next_story)
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""

@@ -26,5 +26,4 @@ class RedditScraper:
             story = Story(title=story.title, story_string=story.selftext)
             top_stories.append(story)
 
-        print(top_stories)
         return top_stories
