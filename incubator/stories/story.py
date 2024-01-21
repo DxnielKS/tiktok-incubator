@@ -11,6 +11,7 @@ class Story:
             self.title = story_lines[0]
             self.body = ' '.join(story_lines[1:])
         else:
+            self.title=title
             self.body = ' '.join(story_lines)
 
     def get_title(self):

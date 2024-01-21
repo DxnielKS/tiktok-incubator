@@ -89,14 +89,16 @@ def schedule_tasks_for_day():
     schedule.clear()
     current_time = datetime.datetime.now()
     # If it's before 23:00, schedule for the remaining hours of today
-    if current_time.hour < 23:
-        random_times_today = generate_random_times(5, start_hour=current_time.hour)
-        for time_str in random_times_today:
-            schedule.every().day.at(time_str).do(post_next_story)
-    # Schedule for tomorrow
-    random_times_tomorrow = generate_random_times(5)
-    for time_str in random_times_tomorrow:
-        schedule.every().day.at(time_str).do(post_next_story)
+    # if current_time.hour < 23:
+    #     random_times_today = generate_random_times(5, start_hour=current_time.hour)
+    #     for time_str in random_times_today:
+    #         schedule.every().day.at(time_str).do(post_next_story)
+    # # Schedule for tomorrow
+    # random_times_tomorrow = generate_random_times(5)
+    # for time_str in random_times_tomorrow:
+    #     schedule.every().day.at(time_str).do(post_next_story)
+
+    schedule.every().day.at('22:11').do(post_next_story)
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
@@ -108,13 +110,13 @@ def upload_local_video(video_name, description, cookies='cookies.txt'):
 def main():
 
     global story_queue
-    story_queue = deque[Story]()
-    schedule_tasks_for_day()
+    story_queue = deque()
     story_getter = RedditScraper()
     stories = story_getter.get_top_5_posts()
+    story_queue += stories
+
+    schedule_tasks_for_day()
     print(f'Made Schedule: {schedule.get_jobs()}')
-    [story_queue.append(story) for story in stories]
-    print(story_queue)
 
     while True:
         current_time = datetime.datetime.now()
