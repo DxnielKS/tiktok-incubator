@@ -1,3 +1,4 @@
+from incubator.stories.story import Story
 import praw
 
 class RedditScraper:
@@ -12,8 +13,11 @@ class RedditScraper:
             username="AkunaMaTaha"
             )
 
-    def get_top_post(self):
+    def get_top_5_posts(self):
         """Method to get the top post from the 'trueoffmychest' subreddit."""
-        top_post = self.reddit.subreddit("trueoffmychest").top(limit=1)
-        for post in top_post:
+        top_posts = self.reddit.subreddit("trueoffmychest").top(limit=5)
+        for post in top_posts:
             print(f"Title: {post.title}, Score: {post.score}")
+
+        top_stories = [Story(title=post.title, story_string=post.body) for post in top_posts]
+        return top_posts

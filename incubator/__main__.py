@@ -1,9 +1,11 @@
 from incubator.clipper import *
-from collections import deque
+from incubator.content_creators import RedditScraper
 from incubator.stories import Story
+
 
 from tiktok_uploader.upload import upload_video
 import tiktok_uploader
+from collections import deque
 from openai import OpenAI
 from dotenv import load_dotenv
 from flask import Flask
@@ -96,10 +98,14 @@ def main():
     story_queue = deque[Story]()
     schedule_tasks_for_day()
 
+    story_getter = RedditScraper()
+
     while True:
         current_time = datetime.now()
         if current_time.hour == 0 and current_time.minute == 0:
             schedule_tasks_for_day()
+            stories = story_getter.get_top_5_posts()
+            [story_queue.append(story) for story in stories]
         schedule.run_pending()
         time.sleep(60)
         

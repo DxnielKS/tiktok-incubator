@@ -1,16 +1,16 @@
-FROM python:3.9-slim
+FROM python:3.9
 
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-#RUN apt-get install fonts-poppins
-RUN /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-RUN brew install imagemagick
-RUN brew install ffmpeg
+# Install dependencies for imagemagick and ffmpeg
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends imagemagick ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
 
 CMD ["python", "-m", "incubator"]
