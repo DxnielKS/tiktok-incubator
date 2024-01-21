@@ -100,9 +100,8 @@ def main():
     global story_queue
     story_queue = deque[Story]()
     schedule_tasks_for_day()
-
     story_getter = RedditScraper()
-
+    stories = story_getter.get_top_5_posts()
     print(f'Made Schedule: {schedule.get_jobs()}')
 
     while True:
