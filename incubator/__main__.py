@@ -13,6 +13,9 @@ from datetime import datetime, timedelta
 import random
 import time
 import schedule
+import logging
+
+_LOGGER = logging.getLogger('incubator')
 
 load_dotenv()
 
@@ -99,6 +102,8 @@ def main():
     schedule_tasks_for_day()
 
     story_getter = RedditScraper()
+
+    _LOGGER.info(f'Made Schedule: {schedule.get_jobs()}')
 
     while True:
         current_time = datetime.now()
