@@ -103,6 +103,8 @@ def main():
     story_getter = RedditScraper()
     stories = story_getter.get_top_5_posts()
     print(f'Made Schedule: {schedule.get_jobs()}')
+    [story_queue.append(story) for story in stories]
+    print(story_queue)
 
     while True:
         current_time = datetime.now()
