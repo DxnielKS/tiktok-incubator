@@ -103,7 +103,7 @@ def main():
 
     story_getter = RedditScraper()
 
-    _LOGGER.info(f'Made Schedule: {schedule.get_jobs()}')
+    print(f'Made Schedule: {schedule.get_jobs()}')
 
     while True:
         current_time = datetime.now()
