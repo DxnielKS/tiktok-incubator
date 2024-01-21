@@ -127,10 +127,10 @@ def generate_audio_text(fulltext: List[str]):
         # Enhanced styling for the text
         text_clip = TextClip(
             text,
-            font='Poppins Bold',  # Ensure Poppins font is installed
+            font='Poppins Bold',
             fontsize=64,
             color="white",
-            stroke_color="black",  # Add stroke for better readability
+            stroke_color="black",
             stroke_width=3,
             align='center',
             method='caption',

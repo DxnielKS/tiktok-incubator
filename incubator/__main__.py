@@ -1,10 +1,14 @@
 from incubator.clipper import *
-from tiktok_uploader.upload import upload_video, upload_videos
-from tiktok_uploader.auth import AuthBackend
+from tiktok_uploader.upload import upload_video
 import tiktok_uploader
 import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from flask import Flask
+from datetime import datetime, timedelta
+import random
+import time
+import schedule
 
 load_dotenv()
 
@@ -20,6 +24,37 @@ def upload_local_video(video_name, description, cookies='cookies.txt'):
                  )
 
 def main():
+
+    def empty_function():
+        pass  # This function will be called at the scheduled times
+
+    def generate_random_times(num_times):
+        times = []
+        for _ in range(num_times):
+            random_hour = random.randint(0, 23)
+            random_minute = random.randint(0, 59)
+            times.append(f"{random_hour:02d}:{random_minute:02d}")
+        return times
+
+    def schedule_tasks_for_day():
+        schedule.clear()  # Clear existing jobs
+        random_times = generate_random_times(5)
+        for time_str in random_times:
+            schedule.every().day.at(time_str).do(empty_function)
+
+    def main_loop():
+        schedule_tasks_for_day()  # Schedule tasks for the current day
+        while True:
+            current_time = datetime.now()
+            if current_time.hour == 0 and current_time.minute == 0:
+                schedule_tasks_for_day()  # Reset tasks at the start of a new day
+            schedule.run_pending()
+            time.sleep(60)  # Wait a minute before checking again
+
+    if __name__ == "__main__":
+        main_loop()
+        
+        
 
     # TURN RAW CLIPS INTO FINAL VIDEO
     console = Console()
@@ -37,6 +72,8 @@ def main():
         title = story.readline()
         content = story.read()
 
+    # define hashtags
+    # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
     hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds"
 
     console.print('[light_green] Trying to generate caption!')
@@ -51,7 +88,7 @@ def main():
         description_response = client.chat.completions.create(
         messages=[
                 {"role": "system", "content": "You are hired as a caption-writer for reddit story tiktok videos. Your goal is to make good captions that are funny and related to the story in some way. Limit the caption to about 10-15 words and focus on it being a caption that funnily describes the video. You will be given the story and a "},
-                {"role": "user", "content": f"Make a caption for this reddit story TikTok {content}."},
+                {"role": "user", "content": f"Make a caption for this reddit story TikTok: {content}."},
             ],
             model="gpt-3.5-turbo",
         )
