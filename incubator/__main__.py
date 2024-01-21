@@ -74,18 +74,28 @@ def post_next_story():
     console.print("\n\n[light_green] Uploading to TikTok")
     upload_local_video(f'{title}.mp4', description)
 
-def generate_random_times(num_times):
+import datetime
+
+def generate_random_times(num_times, start_hour=0):
     times = []
+    current_hour = datetime.datetime.now().hour
     for _ in range(num_times):
-        random_hour = random.randint(0, 23)
+        random_hour = random.randint(max(start_hour, current_hour), 23)
         random_minute = random.randint(0, 59)
         times.append(f"{random_hour:02d}:{random_minute:02d}")
     return times
 
 def schedule_tasks_for_day():
     schedule.clear()
-    random_times = generate_random_times(5)
-    for time_str in random_times:
+    current_time = datetime.datetime.now()
+    # If it's before 23:00, schedule for the remaining hours of today
+    if current_time.hour < 23:
+        random_times_today = generate_random_times(5, start_hour=current_time.hour)
+        for time_str in random_times_today:
+            schedule.every().day.at(time_str).do(post_next_story)
+    # Schedule for tomorrow
+    random_times_tomorrow = generate_random_times(5)
+    for time_str in random_times_tomorrow:
         schedule.every().day.at(time_str).do(post_next_story)
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
@@ -107,7 +117,7 @@ def main():
     print(story_queue)
 
     while True:
-        current_time = datetime.now()
+        current_time = datetime.datetime.now()
         if current_time.hour == 0 and current_time.minute == 0:
             schedule_tasks_for_day()
             stories = story_getter.get_top_5_posts()
