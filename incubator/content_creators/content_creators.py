@@ -17,7 +17,7 @@ class RedditScraper:
         """Method to get the top post from the 'trueoffmychest' subreddit."""
         top_posts = self.reddit.subreddit("trueoffmychest").top(limit=5)
         for post in top_posts:
-            print(f"Title: {post.title}, Score: {post.score}, Content: {post.selftext}")
+            print(f"Title: {post.title}, Score: {post.score}")
 
         top_stories = [Story(title=post.title, story_string=post.selftext) for post in top_posts]
         return top_posts
