@@ -1,0 +1,1 @@
+from incubator.stories.story import Story

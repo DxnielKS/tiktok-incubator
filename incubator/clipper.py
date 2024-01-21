@@ -12,6 +12,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_KEY = os.environ.get('ELEVENLABS_API_KEY')
+try:
+    testing = bool(os.environ.get('TESTING'))
+except:
+    testing = True
 
 set_api_key(API_KEY)
 
@@ -29,7 +33,8 @@ import pyfiglet
 def generate_speech(
         text: str, 
         lang: str = 'en', 
-        filename: str = 'audio.mp3'):
+        filename: str = 'audio.mp3',
+        ):
     """
     Generate Speech Audio from ElevenLabs
     text: str - Text to be synthesized
@@ -37,24 +42,30 @@ def generate_speech(
     filename: str - Filename of output
     """
 
-    # audio = generate(
-    # text=text,
-    # voice="Adam",
-    # model="eleven_multilingual_v2"
-    # )
-    #
-    # save(audio, filename=filename)
-    return
+    if testing:
+        tts = gTTS(text=text, lang=lang)
+        tts.save(filename)
+        return
+        
+    audio = generate(
+    text=text,
+    voice="Adam",
+    model="eleven_multilingual_v2"
+    )
+    
+    save(audio, filename=filename)
 
 
 def clip(
-        content: str, 
+        content: str,
         video_file: str, 
         outfile: str, 
         image_file: str = '',
         title: str = '',
         offset: int = 0, 
-        duration: int = 0):
+        duration: int = 0,
+        testing: bool = True,
+        ):
     """
     Generate the Complete Clip
     content: str - Full content text
