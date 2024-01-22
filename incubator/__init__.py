@@ -1,4 +1,8 @@
 import os
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
+driver = webdriver.Chrome(ChromeDriverManager().install())
 
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
