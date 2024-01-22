@@ -75,8 +75,7 @@ def clip(
     duration: int - Limit the video (default: audio length)
     """
 
-    print(split_text(content))
-    audio_comp, text_comp = generate_audio_text(split_text(content))
+    audio_comp, text_comp = generate_audio_text(split_text(title+' '+content))
 
     audio_comp_list = []
     for audio_file in track(audio_comp, description='Stitching Audio...'):
@@ -139,7 +138,7 @@ def generate_audio_text(fulltext: List[str]):
         # Enhanced styling for the text
         text_clip = TextClip(
             text,
-            font='Poppins-Bold',
+            font='super-foods-font/SuperFoods-2OxXo.ttf',
             fontsize=64,
             color="white",
             stroke_color="black",

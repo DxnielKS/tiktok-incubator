@@ -24,6 +24,8 @@ tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=
 
 def post_next_story():
     story = story_queue.pop()
+    
+    print(f'Story to post: {story.get_title()}')
 
     # TURN RAW CLIPS INTO FINAL VIDEO
     console = Console()
@@ -56,6 +58,7 @@ def post_next_story():
             ],
             model="gpt-3.5-turbo",
         )
+
         description = f"{description_response.choices[0].message.content} {hashtags}"
     except Exception as e:
         console.print(e)
@@ -119,13 +122,14 @@ def main():
 
     schedule_tasks_for_day()
     print(f'Made Schedule: {schedule.get_jobs()}')
-
+    print(story_queue)
+    
     while True:
         current_time = datetime.datetime.now()
         if current_time.hour == 0 and current_time.minute == 0:
             schedule_tasks_for_day()
             stories = story_getter.get_top_5_posts()
-            [story_queue.append(story) for story in stories]
+            story_queue += stories
         schedule.run_pending()
         time.sleep(60)
         
