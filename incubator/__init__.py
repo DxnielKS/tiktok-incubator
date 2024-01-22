@@ -1,8 +1,11 @@
 import os
 from selenium import webdriver
+from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
+options = webdriver.ChromeOptions()
+# Add any Chrome options you need here
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
