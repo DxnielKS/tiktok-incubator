@@ -44,31 +44,35 @@ def post_next_story():
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
     hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds"
 
-    console.print('[light_green] Trying to generate caption!')
+    console.print('[light_green] Making caption')
 
 
-    openai = OpenAI
+    openai = OpenAI()
     try:
         description_response = openai.chat.completions.create(
         messages=[
                 {"role": "system", "content": "You are hired as a caption-writer for reddit story tiktok videos. Your goal is to make good captions that are funny and related to the story in some way. Limit the caption to about 10-15 words and focus on it being a caption that funnily describes the video. You will be given the story and a "},
-                {"role": "user", "content": f"Make a caption for this reddit story TikTok: {content}."},
+                {"role": "user", "content": f"Make a caption for this reddit story TikTok, you should only return the text that will be used as the caption and it should be a comment on the story: {content}."},
             ],
             model="gpt-3.5-turbo",
         )
         description = f"{description_response.choices[0].message.content} {hashtags}"
-    except:
-        description = f"dayum {hashtags}"
+    except Exception as e:
+        console.print(e)
+        description = f"Dayum 😳 {hashtags}"
 
     console.print("\n\n[light_green] Video Generation Started!\n\n")
 
-    # clip(content=content,
-    #      title=title,
-    #      video_file=video_background_file,
-    #      # image_file=image_banner_file,
-    #      outfile=output_file,
-    #      offset=video_background_offset,
-    #     )
+    for f in os.listdir('temp-assets'):
+        os.remove(os.path.join('temp-assets', f))
+
+    clip(content=content,
+         title=title,
+         video_file=video_background_file,
+         outfile=output_file,
+         offset=video_background_offset,
+         # image_file=image_banner_file,
+        )
 
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
@@ -89,16 +93,14 @@ def schedule_tasks_for_day():
     schedule.clear()
     current_time = datetime.datetime.now()
     # If it's before 23:00, schedule for the remaining hours of today
-    # if current_time.hour < 23:
-    #     random_times_today = generate_random_times(5, start_hour=current_time.hour)
-    #     for time_str in random_times_today:
-    #         schedule.every().day.at(time_str).do(post_next_story)
-    # # Schedule for tomorrow
-    # random_times_tomorrow = generate_random_times(5)
-    # for time_str in random_times_tomorrow:
-    #     schedule.every().day.at(time_str).do(post_next_story)
-
-    schedule.every().day.at('22:21').do(post_next_story)
+    if current_time.hour < 23:
+        random_times_today = generate_random_times(5, start_hour=current_time.hour)
+        for time_str in random_times_today:
+            schedule.every().day.at(time_str).do(post_next_story)
+    # Schedule for tomorrow
+    random_times_tomorrow = generate_random_times(5)
+    for time_str in random_times_tomorrow:
+        schedule.every().day.at(time_str).do(post_next_story)
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""

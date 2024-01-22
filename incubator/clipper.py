@@ -12,10 +12,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_KEY = os.environ.get('ELEVENLABS_API_KEY')
-try:
-    testing = bool(os.environ.get('TESTING'))
-except:
-    testing = True
+
+testing = bool(os.getenv('TESTING', True))
 
 set_api_key(API_KEY)
 
@@ -28,6 +26,7 @@ import moviepy.video.fx.all as vfx
 from rich.console import Console
 from rich.progress import track
 import pyfiglet
+import re
 
 
 def generate_speech(
@@ -42,13 +41,11 @@ def generate_speech(
     filename: str - Filename of output
     """
 
-    if testing:
-        tts = gTTS(text=text, lang=lang)
-        tts.save(filename)
-        return
+    # if testing==True:
+    #     tts = gTTS(text=text, lang=lang)
+    #     tts.save(filename)
+    #     return
     
-    
-        
     audio = generate(
     text=text,
     voice="Adam",
@@ -77,6 +74,8 @@ def clip(
     offset: int - Offset starting point of background video (default: 0)
     duration: int - Limit the video (default: audio length)
     """
+
+    print(split_text(content))
     audio_comp, text_comp = generate_audio_text(split_text(content))
 
     audio_comp_list = []
@@ -99,7 +98,7 @@ def clip(
     #     image_clip = ImageClip(image_file).set_duration(duration).set_position(("center", 'center')).resize(0.8) # Adjust if the Banner is too small
     #     vid_clip = CompositeVideoClip([vid_clip, image_clip])
 
-    vid_clip = CompositeVideoClip([vid_clip, concatenate_videoclips(text_comp).set_position(('center', 860))])
+    vid_clip = CompositeVideoClip([vid_clip, concatenate_videoclips(text_comp).set_position(('center', 'center'))])
 
     vid_clip = vid_clip.set_audio(AudioFileClip('temp_audio.mp3').subclip(0, duration))
     vid_clip.write_videofile(outfile, audio_codec='aac')
@@ -112,11 +111,11 @@ def split_text(text: str):
     text: str - Text to split
     delimiter: str - Delimiter of split (default: \n)
     """
-    delimiters = ['\n', ',', ';', '.']
-    for delimiter in delimiters:
-        text = text.replace(delimiter, ' ')
-    result = text.split()
-
+    
+    delimiters = ['\n', ',', ';', '\.']
+    pattern = '|'.join(map(re.escape, delimiters))
+    result = re.split(pattern, text)
+    result = [word for word in result if word.strip() != '']
     return result
 
 
@@ -140,7 +139,7 @@ def generate_audio_text(fulltext: List[str]):
         # Enhanced styling for the text
         text_clip = TextClip(
             text,
-            font='Poppins Bold',
+            font='Poppins-Bold',
             fontsize=64,
             color="white",
             stroke_color="black",
