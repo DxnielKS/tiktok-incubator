@@ -94,16 +94,17 @@ def generate_random_times(num_times, start_hour=0):
 
 def schedule_tasks_for_day():
     schedule.clear()
-    current_time = datetime.datetime.now()
-    # If it's before 23:00, schedule for the remaining hours of today
-    if current_time.hour < 23:
-        random_times_today = generate_random_times(5, start_hour=current_time.hour)
-        for time_str in random_times_today:
-            schedule.every().day.at(time_str).do(post_next_story)
-    # Schedule for tomorrow
-    random_times_tomorrow = generate_random_times(5)
-    for time_str in random_times_tomorrow:
-        schedule.every().day.at(time_str).do(post_next_story)
+    # current_time = datetime.datetime.now()
+    # # If it's before 23:00, schedule for the remaining hours of today
+    # if current_time.hour < 23:
+    #     random_times_today = generate_random_times(5, start_hour=current_time.hour)
+    #     for time_str in random_times_today:
+    #         schedule.every().day.at(time_str).do(post_next_story)
+    # # Schedule for tomorrow
+    # random_times_tomorrow = generate_random_times(5)
+    # for time_str in random_times_tomorrow:
+    #     schedule.every().day.at(time_str).do(post_next_story)
+    schedule.every().day.at('12:50').do(post_next_story)
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
