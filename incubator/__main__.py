@@ -69,13 +69,13 @@ def post_next_story():
     for f in os.listdir('temp-assets'):
         os.remove(os.path.join('temp-assets', f))
 
-    clip(content=content,
-         title=title,
-         video_file=video_background_file,
-         outfile=output_file,
-         offset=video_background_offset,
-         # image_file=image_banner_file,
-        )
+    # clip(content=content,
+    #      title=title,
+    #      video_file=video_background_file,
+    #      outfile=output_file,
+    #      offset=video_background_offset,
+    #      # image_file=image_banner_file,
+    #     )
 
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
