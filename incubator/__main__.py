@@ -104,7 +104,7 @@ def schedule_tasks_for_day():
     # random_times_tomorrow = generate_random_times(5)
     # for time_str in random_times_tomorrow:
     #     schedule.every().day.at(time_str).do(post_next_story)
-    schedule.every().day.at('12:58').do(post_next_story)
+    schedule.every().day.at('13:04').do(post_next_story)
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
