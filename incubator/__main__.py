@@ -79,7 +79,7 @@ def post_next_story():
 
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
-    upload_local_video(f'{title}.mp4', description)
+    upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
 
 import datetime
 
