@@ -3,12 +3,13 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 options = webdriver.ChromeOptions()
-options.binary_location = "/var/lib/dpkg/info/google-chrome-stable.postrm"  # Adjust the path to where Chrome is installed
-options = webdriver.ChromeOptions()
+# Set any options you need
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
-driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
+
+# Now pass the options using the 'options' keyword instead of 'chrome_options'
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
