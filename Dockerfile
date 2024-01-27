@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y libx11-6 libxcomposite1 libxcursor1 lib
 RUN wget -q --continue -O /tmp/google-chrome-stable_current_amd64.deb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
     dpkg -i /tmp/google-chrome-stable_current_amd64.deb; apt-get -fy install; rm /tmp/google-chrome-stable_current_amd64.deb
 
+RUN find / -name "google-chrome*"
+
 # Set up Chromedriver Environment variables
 ENV CHROMEDRIVER_VERSION 2.19
 ENV CHROMEDRIVER_DIR /chromedriver
