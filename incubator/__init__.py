@@ -1,9 +1,10 @@
 import os
 from selenium import webdriver
-from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-ChromeDriverManager().install()
+options = webdriver.ChromeOptions()
+options.binary_location = "/usr/bin/"  # Adjust the path to where Chrome is installed
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
