@@ -4,10 +4,11 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 options = webdriver.ChromeOptions()
 options.binary_location = "/var/lib/dpkg/info/google-chrome-stable.postrm"  # Adjust the path to where Chrome is installed
-# /var/lib/dpkg/info/google-chrome-stable.postrm
-# /var/lib/dpkg/info/google-chrome-stable.list
-# /app/google-chrome-stable_current_amd64.deb
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+options = webdriver.ChromeOptions()
+options.add_argument('--headless')
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=options)
 
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
