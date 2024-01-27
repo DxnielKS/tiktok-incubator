@@ -9,7 +9,7 @@ options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
 # Now pass the options using the 'options' keyword instead of 'chrome_options'
-driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+driver = webdriver.Chrome(options=options)
 
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
