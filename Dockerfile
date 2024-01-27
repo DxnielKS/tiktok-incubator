@@ -23,6 +23,10 @@ RUN apt-get update && apt-get install -y libx11-6 libxcomposite1 libxcursor1 lib
     fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
+# Install Chrome dependencies
+RUN apt-get update && apt-get install -y wget xvfb unzip software-properties-common \
+    libu2f-udev xdg-utils
+
 # Download and install Chrome manually
 RUN wget -q --continue -O /tmp/google-chrome-stable_current_amd64.deb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
     dpkg -i /tmp/google-chrome-stable_current_amd64.deb; apt-get -fy install; rm /tmp/google-chrome-stable_current_amd64.deb
