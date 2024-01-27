@@ -139,13 +139,13 @@ def generate_audio_text(fulltext: List[str]):
         text_clip = TextClip(
             text,
             font='super-foods-font/SuperFoods-2OxXo.ttf',
-            fontsize=64,
+            fontsize=32,
             color="white",
             stroke_color="black",
             stroke_width=3,
             align='center',
             method='caption',
-            size=(660, None),
+            size=(300, None),
             bg_color='transparent'  # Background color
         )
         text_clip = text_clip.set_duration(audio_duration)
