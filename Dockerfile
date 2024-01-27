@@ -8,10 +8,10 @@ RUN pip install --upgrade pip && \
 
 COPY . .
 
-# Install dependencies for imagemagick and ffmpeg
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends ffmpeg imagemagick && \
-    rm -rf /var/lib/apt/lists/*
+# # Install dependencies for imagemagick and ffmpeg
+# RUN apt-get update && \
+#     apt-get install -y --no-install-recommends ffmpeg imagemagick && \
+#     rm -rf /var/lib/apt/lists/*
 
 # We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
 RUN apt-get update && apt-get install -y wget xvfb unzip software-properties-common
