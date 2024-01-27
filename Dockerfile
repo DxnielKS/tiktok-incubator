@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 
 WORKDIR /app
 
@@ -8,21 +8,24 @@ RUN pip install --upgrade pip && \
 
 COPY . .
 
-# # Install dependencies for imagemagick and ffmpeg
-# RUN apt-get update && \
-#     apt-get install -y --no-install-recommends ffmpeg imagemagick && \
-#     rm -rf /var/lib/apt/lists/*
+# Install dependencies for imagemagick and ffmpeg
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ffmpeg imagemagick && \
+    rm -rf /var/lib/apt/lists/*
 
 # We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
 RUN apt-get update && apt-get install -y wget xvfb unzip software-properties-common
 
-# Set up the Chrome PPA
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
-    apt-get update
+# Install Chrome dependencies and fonts
+RUN apt-get update && apt-get install -y libx11-6 libxcomposite1 libxcursor1 libxdamage1 libxi6 \
+    libxtst6 libnss3 libcups2 libxss1 libxrandr2 libasound2 libpango1.0-0 libatk1.0-0 \
+    libatk-bridge2.0-0 libgtk-3-0 libgbm1 fonts-liberation fonts-ipafont-gothic \
+    fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf \
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
-# Install Chrome
-RUN apt-get install -y google-chrome-stable
+# Download and install Chrome manually
+RUN wget -q --continue -O /tmp/google-chrome-stable_current_amd64.deb "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" && \
+    dpkg -i /tmp/google-chrome-stable_current_amd64.deb; apt-get -fy install; rm /tmp/google-chrome-stable_current_amd64.deb
 
 # Set up Chromedriver Environment variables
 ENV CHROMEDRIVER_VERSION 2.19
