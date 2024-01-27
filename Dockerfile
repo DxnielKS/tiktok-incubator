@@ -13,8 +13,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends ffmpeg imagemagick && \
     rm -rf /var/lib/apt/lists/*
 
-# After installing ImageMagick, relax the security policy to prevent errors with moviepy
-RUN sed -i 's/none/read,write/g' /etc/ImageMagick-6/policy.xml
+RUN sed -i 's/none/read,write/g' /etc/ImageMagick-6/policy.xml && \
+    sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml
 
 # We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
 RUN apt-get update && apt-get install -y wget xvfb unzip software-properties-common
