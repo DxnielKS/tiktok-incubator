@@ -22,6 +22,10 @@ load_dotenv()
 # line of code to make the upload page work.. for some reason the package uses a funky upload page url
 tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
 
+from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
+
 def post_next_story():
     story = story_queue.pop()
     
@@ -80,7 +84,7 @@ def post_next_story():
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-    upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
+    upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt', browser_agent=driver)
 
 import datetime
 
@@ -106,11 +110,13 @@ def schedule_tasks_for_day():
     for time_str in random_times_tomorrow:
         schedule.every().day.at(time_str).do(post_next_story)
 
-def upload_local_video(video_name, description, cookies='cookies.txt'):
+def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
     upload_video(f'raw-videos/{video_name}',
                  description=description,
-                 cookies=cookies
+                 cookies=cookies,
+                 browser='chrome',
+                 browser_agent=browser_agent
                  )
 
 def main():

@@ -11,10 +11,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 # Now pass the options using the 'options' keyword instead of 'chrome_options'
 # driver = webdriver.Chrome(options=options)
 
-from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
-
 if not os.path.exists('final-videos'):
     os.mkdir('final-videos')
 
