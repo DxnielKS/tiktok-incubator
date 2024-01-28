@@ -14,7 +14,9 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN sed -i 's/none/read,write/g' /etc/ImageMagick-6/policy.xml && \
-    sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml
+    sed -i '/disable ghostscript format types/,+6d' /etc/ImageMagick-6/policy.xml && \
+    sed -i '/policy domain="resource" name="width" value="16KP"/c\  <policy domain="resource" name="width" value="64KP"/' /etc/ImageMagick-6/policy.xml && \
+    sed -i '/policy domain="resource" name="height" value="16KP"/c\  <policy domain="resource" name="height" value="64KP"/' /etc/ImageMagick-6/policy.xml
 
 # We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
 RUN apt-get update && apt-get install -y wget xvfb unzip software-properties-common
