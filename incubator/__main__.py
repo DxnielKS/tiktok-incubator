@@ -15,19 +15,19 @@ import time
 import schedule
 import logging
 
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
+# from selenium import webdriver
+# from selenium.webdriver.firefox.service import Service as FirefoxService
+# from webdriver_manager.firefox import GeckoDriverManager
 
-# Set up Firefox options
-firefox_options = webdriver.FirefoxOptions()
-firefox_options.add_argument("--headless")  # Run in headless mode, without a GUI
+# # Set up Firefox options
+# firefox_options = webdriver.FirefoxOptions()
+# firefox_options.add_argument("--headless")  # Run in headless mode, without a GUI
 
-# Set up the GeckoDriver service
-service = FirefoxService(executable_path=GeckoDriverManager().install())
+# # Set up the GeckoDriver service
+# service = FirefoxService(executable_path=GeckoDriverManager().install())
 
-# Initialize the WebDriver using the specified service and options
-driver = webdriver.Firefox(service=service, options=firefox_options)
+# # Initialize the WebDriver using the specified service and options
+# driver = webdriver.Firefox(service=service, options=firefox_options)
 
 _LOGGER = logging.getLogger('incubator')
 
@@ -35,8 +35,6 @@ load_dotenv()
 
 # line of code to make the upload page work.. for some reason the package uses a funky upload page url
 # tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
-
-print(tiktok_uploader.config['implicit_wait'])
 
 def post_next_story():
     story = story_queue.pop()
@@ -96,7 +94,7 @@ def post_next_story():
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-    upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt', browser_agent=driver)
+    upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
 
 import datetime
 
@@ -125,11 +123,11 @@ def schedule_tasks_for_day():
 def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
     upload_video(f'raw-videos/{video_name}',
-                 description=description,
-                 cookies=cookies,
-                 browser='firefox',
-                #  browser_agent=browser_agent
-                 )
+                description=description,
+                cookies=cookies,
+                browser='firefox',
+                headless=True
+                )
 
 def main():
 

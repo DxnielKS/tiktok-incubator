@@ -84,7 +84,7 @@ sniffio==1.3.0
 sortedcontainers==2.4.0
 soupsieve==2.5
 stack-data==0.6.3
-tiktok-uploader==1.0.14
+# tiktok-uploader==1.0.15
 toml==0.10.2
 tqdm==4.66.1
 traitlets==5.14.0
