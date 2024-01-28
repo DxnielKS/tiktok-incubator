@@ -15,36 +15,28 @@ import time
 import schedule
 import logging
 
+from selenium import webdriver
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
+
+# Set up Firefox options
+firefox_options = webdriver.FirefoxOptions()
+firefox_options.add_argument("--headless")  # Run in headless mode, without a GUI
+
+# Set up the GeckoDriver service
+service = FirefoxService(executable_path=GeckoDriverManager().install())
+
+# Initialize the WebDriver using the specified service and options
+driver = webdriver.Firefox(service=service, options=firefox_options)
+
+
+
 _LOGGER = logging.getLogger('incubator')
 
 load_dotenv()
 
 # line of code to make the upload page work.. for some reason the package uses a funky upload page url
 tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-
-# options = webdriver.ChromeOptions()
-# # Set any options you need
-
-# Now pass the options using the 'options' keyword instead of 'chrome_options'
-# driver = webdriver.Chrome(options=options)
-
-chrome_options = Options()
-# Add any necessary configuration to chrome_options here
-# For example: chrome_options.add_argument('--headless')
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
-
-driver = webdriver.Remote(
-    command_executor="http://127.0.0.1:4444/wd/hub",
-    desired_capabilities=chrome_options.to_capabilities()
-)
 
 def post_next_story():
     story = story_queue.pop()
