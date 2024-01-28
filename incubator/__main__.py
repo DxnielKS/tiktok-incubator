@@ -23,8 +23,28 @@ load_dotenv()
 tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
 
 from selenium import webdriver
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-driver = webdriver.Remote("http://127.0.0.1:4444/wd/hub", DesiredCapabilities.CHROME)
+from selenium.webdriver.chrome.options import Options
+
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
+# options = webdriver.ChromeOptions()
+# # Set any options you need
+
+# Now pass the options using the 'options' keyword instead of 'chrome_options'
+# driver = webdriver.Chrome(options=options)
+
+chrome_options = Options()
+# Add any necessary configuration to chrome_options here
+# For example: chrome_options.add_argument('--headless')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+
+driver = webdriver.Remote(
+    command_executor="http://127.0.0.1:4444/wd/hub",
+    desired_capabilities=chrome_options.to_capabilities()
+)
 
 def post_next_story():
     story = story_queue.pop()
