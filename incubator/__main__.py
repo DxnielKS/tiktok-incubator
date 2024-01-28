@@ -29,14 +29,14 @@ service = FirefoxService(executable_path=GeckoDriverManager().install())
 # Initialize the WebDriver using the specified service and options
 driver = webdriver.Firefox(service=service, options=firefox_options)
 
-
-
 _LOGGER = logging.getLogger('incubator')
 
 load_dotenv()
 
 # line of code to make the upload page work.. for some reason the package uses a funky upload page url
-tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
+# tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
+
+print(tiktok_uploader.config['implicit_wait'])
 
 def post_next_story():
     story = story_queue.pop()
@@ -127,8 +127,8 @@ def upload_local_video(video_name, description, cookies='cookies.txt', browser_a
     upload_video(f'raw-videos/{video_name}',
                  description=description,
                  cookies=cookies,
-                 browser='chrome',
-                 browser_agent=browser_agent
+                 browser='firefox',
+                #  browser_agent=browser_agent
                  )
 
 def main():
