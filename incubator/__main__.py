@@ -80,7 +80,7 @@ def post_next_story():
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-    upload_local_video(f'raw-videos/background1.mp4', description, cookies='daniel-cookies.txt')
+    upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
 
 import datetime
 
@@ -108,7 +108,7 @@ def schedule_tasks_for_day():
 
 def upload_local_video(video_name, description, cookies='cookies.txt'):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
-    upload_video(f'final-videos/{video_name}',
+    upload_video(f'raw-videos/{video_name}',
                  description=description,
                  cookies=cookies
                  )
