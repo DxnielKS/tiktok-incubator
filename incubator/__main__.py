@@ -7,10 +7,6 @@ from incubator.stories import Story
 from incubator.database.dbm import log_story_posted
 
 
-# from selenium.webdriver import Chrome
-# from selenium.webdriver import Firefox
-from tiktok_uploader.upload import upload_video
-import tiktok_uploader
 from supabase.client import create_client
 from collections import deque
 from openai import OpenAI
