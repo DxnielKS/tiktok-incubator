@@ -97,7 +97,7 @@ def post_next_story():
     console.print("\n\n[light_green] Uploading to TikTok")
     try:
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-        os.system(f'python cli.py upload --user clipscartel -v "final-videos/{title}.mp4" -t "{description}"')
+        os.system(f'python TiktokAutoUploader/cli.py upload --user clipscartel -v "final-videos/{title}.mp4" -t "{description}"')
     # upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
         os.remove(f'final-videos/{title}.mp4')
         os.remove(f'TiktokAutoUploader/VideosDirPath/pre-processed.mp4')
