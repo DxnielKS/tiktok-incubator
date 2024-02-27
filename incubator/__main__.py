@@ -104,7 +104,9 @@ def post_next_story():
 def generate_random_times(num_times, start_hour=0):
     times = []
     current_hour = datetime.datetime.now().hour
-    for _ in range(num_times):
+    current_minute = datetime.datetime.now().minute
+    times.append(f"{current_hour:02d}:{(current_minute+1):02d}")
+    for _ in range(num_times-1):
         random_hour = random.randint(max(start_hour, current_hour), 23)
         random_minute = random.randint(0, 59)
         times.append(f"{random_hour:02d}:{random_minute:02d}")
