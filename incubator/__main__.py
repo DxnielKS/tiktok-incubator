@@ -123,13 +123,13 @@ def schedule_tasks_for_day():
     for time_str in random_times_tomorrow:
         schedule.every().day.at(time_str).do(post_next_story)
 
-def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
-    """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
-    upload_video(
-                filename=f'raw-videos/{video_name}',
-                description=description,
-                cookies=cookies,
-                )
+# def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
+#     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
+#     upload_video(
+#                 filename=f'raw-videos/{video_name}',
+#                 description=description,
+#                 cookies=cookies,
+#                 )
 
 def main():
 
