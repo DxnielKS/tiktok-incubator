@@ -1,33 +1,32 @@
+# import selenium.webdriver.chrome.options
+import os
+
 from incubator.clipper import *
 from incubator.content_creators import RedditScraper
 from incubator.stories import Story
+from incubator.database.dbm import log_story_posted
 
 
+# from selenium.webdriver import Chrome
+# from selenium.webdriver import Firefox
 from tiktok_uploader.upload import upload_video
 import tiktok_uploader
+from supabase.client import create_client
 from collections import deque
 from openai import OpenAI
 from dotenv import load_dotenv
 from flask import Flask
 from datetime import datetime, timedelta
+import datetime
 import random
 import time
 import schedule
 import logging
 
-# from selenium import webdriver
-# from selenium.webdriver.firefox.service import Service as FirefoxService
-# from webdriver_manager.firefox import GeckoDriverManager
+url: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY")
 
-# # Set up Firefox options
-# firefox_options = webdriver.FirefoxOptions()
-# firefox_options.add_argument("--headless")  # Run in headless mode, without a GUI
-
-# # Set up the GeckoDriver service
-# service = FirefoxService(executable_path=GeckoDriverManager().install())
-
-# # Initialize the WebDriver using the specified service and options
-# driver = webdriver.Firefox(service=service, options=firefox_options)
+logging.basicConfig(level=logging.INFO)
 
 _LOGGER = logging.getLogger('incubator')
 
@@ -62,18 +61,21 @@ def post_next_story():
 
     console.print('[light_green] Making caption')
 
-
     openai = OpenAI()
+
     try:
         description_response = openai.chat.completions.create(
         messages=[
-                {"role": "system", "content": "You are hired as a caption-writer for reddit story tiktok videos. Your goal is to make good captions that are funny and related to the story in some way. Limit the caption to about 10-15 words and focus on it being a caption that funnily describes the video. You will be given the story and a "},
+                {"role": "system", "content": "You are hired as a caption-writer for reddit story tiktok videos. Your goal is to make good captions that are funny and related to the story in some way. Limit the caption to about 10-15 words and focus on it being a caption that funnily comments on the story from the point of view of a viewer. Use colloquial langauge like lol, lmao and wth. Use emoji's too."},
                 {"role": "user", "content": f"Make a caption for this reddit story TikTok, you should only return the text that will be used as the caption and it should be a comment on the story: {content}."},
             ],
             model="gpt-3.5-turbo",
         )
 
         description = f"{description_response.choices[0].message.content} {hashtags}"
+
+        _LOGGER.info(f'Caption {description}')
+
     except Exception as e:
         console.print(e)
         description = f"Dayum 😳 {hashtags}"
@@ -83,20 +85,25 @@ def post_next_story():
     for f in os.listdir('temp-assets'):
         os.remove(os.path.join('temp-assets', f))
 
-    # clip(content=content,
-    #      title=title,
-    #      video_file=video_background_file,
-    #      outfile=output_file,
-    #      offset=video_background_offset,
-    #      # image_file=image_banner_file,
-    #     )
+    clip(content=content,
+         title=title,
+         video_file=video_background_file,
+         outfile=output_file,
+         offset=video_background_offset,
+         # image_file=image_banner_file,
+        )
 
     console.print("\n\n[light_green] Video Completed")
     console.print("\n\n[light_green] Uploading to TikTok")
+    try:
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-    upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
-
-import datetime
+        os.system(f'python cli.py upload --user clipscartel -v "final-videos/{title}.mp4" -t "{description}"')
+    # upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
+        os.remove(f'final-videos/{title}.mp4')
+        os.remove(f'TiktokAutoUploader/VideosDirPath/pre-processed.mp4')
+        log_story_posted(title=title, story=content)
+    except Exception as e:
+        _LOGGER.error(f'Failed to upload, remove video and log video. {e}')
 
 def generate_random_times(num_times, start_hour=0):
     times = []
@@ -122,11 +129,10 @@ def schedule_tasks_for_day():
 
 def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
-    upload_video(f'raw-videos/{video_name}',
+    upload_video(
+                filename=f'raw-videos/{video_name}',
                 description=description,
                 cookies=cookies,
-                browser='firefox',
-                headless=True
                 )
 
 def main():
@@ -137,20 +143,18 @@ def main():
     stories = story_getter.get_top_5_posts()
     story_queue += stories
 
-    post_next_story()
-
-    # schedule_tasks_for_day()
-    # print(f'Made Schedule: {schedule.get_jobs()}')
-    # print(story_queue)
+    schedule_tasks_for_day()
+    print(f'Made Schedule: {schedule.get_jobs()}')
+    print(story_queue)
     
-    # while True:
-    #     current_time = datetime.datetime.now()
-    #     if current_time.hour == 0 and current_time.minute == 0:
-    #         schedule_tasks_for_day()
-    #         stories = story_getter.get_top_5_posts()
-    #         story_queue += stories
-    #     schedule.run_pending()
-    #     time.sleep(60)
+    while True:
+        current_time = datetime.datetime.now()
+        if current_time.hour == 0 and current_time.minute == 0:
+            schedule_tasks_for_day()
+            stories = story_getter.get_top_5_posts()
+            story_queue += stories
+        schedule.run_pending()
+        time.sleep(60)
         
 
 if __name__ == "__main__":

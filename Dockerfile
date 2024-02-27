@@ -1,25 +1,23 @@
-FROM python:3.9-slim
+FROM python:3.9.13-slim
 
 # Set up working directory
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y git \
-    && git clone https://github.com/andrewCohn/tiktok-uploader.git \
-    && cd tiktok-uploader && pip install .
-
-RUN apt-get update && apt-get install -y firefox-esr wget \
-    && wget -q "https://github.com/mozilla/geckodriver/releases/download/v0.29.0/geckodriver-v0.29.0-linux64.tar.gz" -O /tmp/geckodriver.tar.gz \
-    && tar -xzf /tmp/geckodriver.tar.gz -C /usr/local/bin \
-    && chmod +x /usr/local/bin/geckodriver \
-    && rm /tmp/geckodriver.tar.gz
-
-# Install Chromium
-RUN apt-get update && apt-get install -y chromium
+# RUN apt-get update && apt-get install -y git \
+#     && git clone https://github.com/redrickh/tiktok-uploader \
+#     && cd tiktok-uploader && pip install .
 
 # Copy the Python requirements file and install Python dependencies
 COPY requirements.txt .
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
+
+RUN apt-get install curl
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash
+RUN apt-get install nodejs
+# RUN git clone https://github.com/makiisthenes/TiktokAutoUploader
+RUN cd TiktokAutoUploader && pip install -r requirements.txt
+RUN cd tiktok_uploader/tiktok-signature && npm i && cd ../../..
 
 # Copy the rest of the application
 COPY . .

@@ -1,4 +1,5 @@
 from incubator.stories.story import Story
+from incubator.database.dbm import check_if_story_posted
 import praw
 
 class RedditScraper:
@@ -16,13 +17,10 @@ class RedditScraper:
     def get_top_5_posts(self):
         """Method to get the top post from the 'trueoffmychest' subreddit.""" 
         top_posts = []
-        [top_posts.append(post) for post in self.reddit.subreddit("trueoffmychest").top(time_filter="day", limit=2)]
-        [top_posts.append(post) for post in self.reddit.subreddit("confession").top(time_filter="day", limit=2)]
-        [top_posts.append(post) for post in self.reddit.subreddit("AmITheAsshole").top(time_filter="day", limit=1)]
+        [top_posts.append(post) for post in self.reddit.subreddit("trueoffmychest").top(time_filter="day", limit=2) if not check_if_story_posted(story=post.selftext)]
+        [top_posts.append(post) for post in self.reddit.subreddit("confession").top(time_filter="day", limit=2) if not check_if_story_posted(story=post.selftext)]
+        [top_posts.append(post) for post in self.reddit.subreddit("AmITheAsshole").top(time_filter="day", limit=1) if not check_if_story_posted(story=post.selftext)]
         print(top_posts)
-
-        # for post in top_posts:
-        #     print(f"Title: {post.title}, Score: {post.score}")
     
         top_stories = []
 
