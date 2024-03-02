@@ -3,7 +3,7 @@ elevenlabs==0.2.27
 fake_useragent==1.4.0
 Flask==2.3.2
 gtts==2.5.1
-moviepy==1.0.3
+moviepy==1.0.2
 openai==1.12.0
 praw==7.7.1
 pyfiglet==1.0.2
@@ -17,3 +17,4 @@ schedule==1.2.1
 setuptools==68.0.0
 supabase==2.3.7
 undetected_chromedriver==3.5.5
+Pillow==8.0.0

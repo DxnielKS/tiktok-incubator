@@ -49,7 +49,7 @@ def post_next_story():
     video_background_file = "raw-videos/background.mp4"  # Your video background file
     video_background_offset = random.randint(0, 5000)  # Starting Position of Video : 0 for Beginning
     image_banner_file = "OIP.jpg"  # Your image banner file
-    output_file = f"final-videos/{title}.mp4"  # The output filename
+    output_file = f"final-videos/video.mp4"  # The output filename
 
     # define hashtags
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
@@ -93,11 +93,10 @@ def post_next_story():
     console.print("\n\n[light_green] Uploading to TikTok")
     try:
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-        os.system(f'python TiktokAutoUploader/cli.py upload --user clipscartel -v "final-videos/{title}.mp4" -t "{description}"')
+        os.system(f'mv final-videos/video.mp4 TiktokAutoUploader/VideosDirPath && cd TiktokAutoUploader && python cli.py upload --user clipscartel -v video.mp4 --title {description} && rm VideosDirPath/video.mp4')
+        # os.system('cd TiktokAutoUploader && python cli.py upload --user clipscartel -yt \\"https://www.youtube.com/shorts/c8BEohxQBJs\\" --title \\"video\\"')
     # upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
-        os.remove(f'final-videos/{title}.mp4')
-        os.remove(f'TiktokAutoUploader/VideosDirPath/pre-processed.mp4')
-        log_story_posted(title=title, story=content)
+        # log_story_posted(title=title, story=content)
     except Exception as e:
         _LOGGER.error(f'Failed to upload, remove video and log video. {e}')
 

@@ -16,8 +16,8 @@ def check_if_story_posted(story, supabase_client=inject_supabase_client()) -> bo
 def log_story_posted(title, story, supabase_client=inject_supabase_client()) -> bool:
     hashed = generate_unique_id(story)
     try:
-        supabase_client.table('countries').insert({
-            "id": uuid.uuid4(),
+        supabase_client.table('videos_posted').insert({
+            "id": str(uuid.uuid4()),
             "video_hash": hashed,
             "title": title,
             'story': story,
