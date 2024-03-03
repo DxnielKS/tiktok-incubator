@@ -18,6 +18,7 @@ import random
 import time
 import schedule
 import logging
+import threading
 
 url: str = os.environ.get("SUPABASE_URL")
 key: str = os.environ.get("SUPABASE_KEY")
@@ -30,6 +31,10 @@ load_dotenv()
 
 # line of code to make the upload page work.. for some reason the package uses a funky upload page url
 # tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
+
+def post_next_story_threaded():
+    thread = threading.Thread(target=post_next_story)
+    thread.start()
 
 def post_next_story():
     story = story_queue.pop()
@@ -118,11 +123,11 @@ def schedule_tasks_for_day():
     if current_time.hour < 23:
         random_times_today = generate_random_times(5, start_hour=current_time.hour)
         for time_str in random_times_today:
-            schedule.every().day.at(time_str).do(post_next_story)
+            schedule.every().day.at(time_str).do(post_next_story_threaded)
     # Schedule for tomorrow
     random_times_tomorrow = generate_random_times(5)
     for time_str in random_times_tomorrow:
-        schedule.every().day.at(time_str).do(post_next_story)
+        schedule.every().day.at(time_str).do(post_next_story_threaded)
 
 # def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
 #     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""

@@ -28,6 +28,10 @@ from rich.progress import track
 import pyfiglet
 import re
 
+SLANG_TO_FULL_WORDS = {
+    'wtf': 'what the fudge',
+}
+
 
 def generate_speech(
         text: str, 
@@ -139,13 +143,13 @@ def generate_audio_text(fulltext: List[str]):
         text_clip = TextClip(
             text,
             font='super-foods-font/SuperFoods-2OxXo.ttf',
-            fontsize=20,
+            fontsize=40,
             color="white",
             stroke_color="black",
             stroke_width=3,
             align='center',
             method='caption',
-            size=(100, None),
+            size=(None,500),
             bg_color='transparent'  # Background color
         )
         text_clip = text_clip.set_duration(audio_duration)
