@@ -56,7 +56,6 @@ def post_next_story():
     image_banner_file = "OIP.jpg"  # Your image banner file
     output_file = f"final-videos/video.mp4"  # The output filename
 
-    # define hashtags
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
     hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds"
 
@@ -98,7 +97,9 @@ def post_next_story():
     console.print("\n\n[light_green] Uploading to TikTok")
     try:
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
-        os.system(f'mv final-videos/video.mp4 TiktokAutoUploader/VideosDirPath && cd TiktokAutoUploader && python cli.py upload --user clipscartel -v video.mp4 --title {description} && rm VideosDirPath/video.mp4')
+        import shlex
+        description_escaped = shlex.quote(description)
+        os.system(f'mv final-videos/video.mp4 TiktokAutoUploader/VideosDirPath && cd TiktokAutoUploader && python cli.py upload --user clipscartel -v video.mp4 --title {description_escaped} && rm VideosDirPath/video.mp4')
         # os.system('cd TiktokAutoUploader && python cli.py upload --user clipscartel -yt \\"https://www.youtube.com/shorts/c8BEohxQBJs\\" --title \\"video\\"')
     # upload_local_video(f'background1.mp4', description, cookies='daniel-cookies.txt')
         # log_story_posted(title=title, story=content)
