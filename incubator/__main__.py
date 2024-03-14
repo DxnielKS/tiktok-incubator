@@ -57,7 +57,7 @@ def post_next_story():
     output_file = f"final-videos/video.mp4"  # The output filename
 
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
-    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds"
+    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca"
 
     console.print('[light_green] Making caption')
 
@@ -67,7 +67,7 @@ def post_next_story():
         description_response = openai.chat.completions.create(
         messages=[
                 {"role": "system", "content": "You are hired as a caption-writer for reddit story tiktok videos. Your goal is to make good captions that are funny and related to the story in some way. Limit the caption to about 10-15 words and focus on it being a caption that funnily comments on the story from the point of view of a viewer. Use colloquial langauge like lol, lmao and wth. Use emoji's too."},
-                {"role": "user", "content": f"Make a caption for this reddit story TikTok, you should only return the text that will be used as the caption and it should be a comment on the story: {content}."},
+                {"role": "user", "content": f"Make a caption for this reddit story TikTok, you should only return the text that will be used as the caption. {content}."},
             ],
             model="gpt-3.5-turbo",
         )
