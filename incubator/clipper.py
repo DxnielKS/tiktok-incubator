@@ -149,7 +149,7 @@ def generate_audio_text(fulltext: List[str]):
             stroke_width=3,
             align='center',
             method='caption',
-            size=(None,500),
+            size=(None,1000),
             bg_color='transparent'  # Background color
         )
         text_clip = text_clip.set_duration(audio_duration)
