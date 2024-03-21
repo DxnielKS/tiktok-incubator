@@ -57,7 +57,7 @@ def post_next_story():
     output_file = f"final-videos/video.mp4"  # The output filename
 
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
-    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca"
+    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryou #viral #foryoupage #tiktok #fy #trending"
 
     console.print('[light_green] Making caption')
 
