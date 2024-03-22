@@ -7,10 +7,10 @@ story.txt
 venv
 .env
 .idea
-raw-videos
-temp-assets
-story-lines
-final-videos
+raw-videos/*.mp4
+temp-assets/*.mp4
+story-lines/*.txt
+final-videos/*.mp4
 # Created by https://www.toptal.com/developers/gitignore/api/macos,jetbrains,python,pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,jetbrains,python,pycharm
 
