@@ -1,1 +1,2 @@
 from incubator.content_creators.content_creators import RedditScraper
+from incubator.content_creators.content_creators import YoutubeVideoScraper

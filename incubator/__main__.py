@@ -3,6 +3,7 @@ import os
 
 from incubator.clipper import *
 from incubator.content_creators import RedditScraper
+from incubator.content_creators import YoutubeVideoScraper
 from incubator.stories import Story
 from incubator.database.dbm import log_story_posted
 
@@ -31,6 +32,33 @@ load_dotenv()
 
 # line of code to make the upload page work.. for some reason the package uses a funky upload page url
 # tiktok_uploader.config['paths']['upload'] = 'https://www.tiktok.com/upload?lang=en'
+
+def post_next_youtube_short_threaded():
+    thread = threading.Thread(target=post_next_youtube_short)
+    thread.start()
+
+def post_next_youtube_short():
+    short = short_queue.pop()
+
+    url = short.get_url()
+
+    console = Console()
+
+    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryou #viral #foryoupage #tiktok #fy #trending"
+
+    console.print('[light_green] Making caption')
+
+    description = f"Dayum 😳 {hashtags}"
+
+    try:
+    # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
+        import shlex
+        description_escaped = shlex.quote(description)
+        os.system(f'cd TiktokAutoUploader && python cli.py upload --user clipscartel -yt \\"{url}\\" --title {description_escaped}')
+        # log_story_posted(title=title, story=content)
+    except Exception as e:
+        _LOGGER.error(f'Failed to upload, remove video and log video. {e}')
+
 
 def post_next_story_threaded():
     thread = threading.Thread(target=post_next_story)
@@ -118,6 +146,9 @@ def generate_random_times(num_times, start_hour=0):
     return times
 
 def schedule_tasks_for_day():
+    """
+    Function to schedule times to post shorts and reddit stories.
+    """
     schedule.clear()
     current_time = datetime.datetime.now()
     # If it's before 23:00, schedule for the remaining hours of today
@@ -130,6 +161,10 @@ def schedule_tasks_for_day():
     for time_str in random_times_tomorrow:
         schedule.every().day.at(time_str).do(post_next_story_threaded)
 
+    random_times_tomorrow = generate_random_times(5)
+    for time_str in random_times_tomorrow:
+        schedule.every().day.at(time_str).do(post_next_youtube_short_threaded)
+
 # def upload_local_video(video_name, description, cookies='cookies.txt', browser_agent=None):
 #     """Function to take in a video stored locally and upload to TikTok using the cookies stored locally."""
 #     upload_video(
@@ -140,22 +175,29 @@ def schedule_tasks_for_day():
 
 def main():
 
-    global story_queue
+    global story_queue, short_queue
     story_queue = deque()
+    short_queue = deque()
     story_getter = RedditScraper()
+    short_getter = YoutubeVideoScraper()
     stories = story_getter.get_top_5_posts()
+    shorts = short_getter.get_top_5_most_viewed_and_liked_shorts()
     story_queue += stories
+    short_queue += shorts
 
     schedule_tasks_for_day()
     print(f'Made Schedule: {schedule.get_jobs()}')
     print(story_queue)
+    print(short_queue)
     
     while True:
         current_time = datetime.datetime.now()
         if current_time.hour == 0 and current_time.minute == 0:
             schedule_tasks_for_day()
             stories = story_getter.get_top_5_posts()
+            shorts = short_getter.get_top_5_most_viewed_and_liked_shorts()
             story_queue += stories
+            short_queue += shorts
         schedule.run_pending()
         time.sleep(60)
         

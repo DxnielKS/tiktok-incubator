@@ -18,3 +18,5 @@ setuptools==68.0.0
 supabase==2.3.7
 undetected_chromedriver==3.5.5
 Pillow==8.0.0
+google-api-python-client
+pytube
