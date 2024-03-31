@@ -57,7 +57,7 @@ class YoutubeVideoScraper:
         list=[]
         counter=0
         results = Search(self.search_terms[0])
-        for yt in results:
+        for yt in results.results:
             if counter>5:
                 break
             if self.check_video_is_short(yt.watch_url):
