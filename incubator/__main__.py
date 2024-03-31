@@ -6,6 +6,7 @@ from incubator.content_creators import RedditScraper
 from incubator.content_creators import YoutubeVideoScraper
 from incubator.stories import Story
 from incubator.database.dbm import log_story_posted
+from incubator.database.dbm import log_short_posted
 
 
 from supabase.client import create_client
@@ -48,16 +49,30 @@ def post_next_youtube_short():
 
     console.print('[light_green] Making caption')
 
-    description = f"Dayum 😳 {hashtags}"
-
-    # TODO: use youtube short title to make my caption
+    openai = OpenAI()
 
     try:
-    # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
+        description_response = openai.chat.completions.create(
+        messages=[
+                {"role": "system", "content": "You are a TikTok account owner and you are posting popular youtube shorts to your tiktok to get lots of views and maximise traction for money! You should make short and relevant TikTok captions for these youtube shorts from your POV as your role."},
+                {"role": "user", "content": f"Make a caption for: {short.get_title()}"},
+            ],
+            model="gpt-3.5-turbo",
+        )
+
+        description = f"{description_response.choices[0].message.content} {hashtags}"
+
+        _LOGGER.info(f'Caption: {description}')
+
+    except Exception as e:
+        console.print(e)
+        description = f"Dayum 😳 {hashtags}"
+
+    try:
         import shlex
         description_escaped = shlex.quote(description)
         os.system(f'cd TiktokAutoUploader && python cli.py upload --user clipscartel -yt \\"{url}\\" --title {description_escaped}')
-        # log_story_posted(title=title, story=content)
+        # log_short_posted(title=title, story=content)
     except Exception as e:
         _LOGGER.error(f'Failed to upload, remove video and log video. {e}')
 
