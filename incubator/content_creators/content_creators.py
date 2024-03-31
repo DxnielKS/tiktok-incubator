@@ -53,7 +53,7 @@ class YoutubeVideoScraper:
 
         
 
-    def get_top_5_most_viewed_and_liked_shorts(self, channel_id) -> list[Short]:
+    def get_top_5_most_viewed_and_liked_shorts(self) -> list[Short]:
         list=[]
         counter=0
         results = Search(self.search_terms[0])
