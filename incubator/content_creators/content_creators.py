@@ -7,6 +7,7 @@ import requests
 import pytube
 from pytube import Channel
 from pytube import YouTube
+from pytube import Search
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -37,24 +38,30 @@ class RedditScraper:
             top_stories.append(story)
 
         return top_stories
-
 class YoutubeVideoScraper:
-    """Finds popular YouTube Shorts"""
+    """
+    Finds popular YouTube Shorts.
+
+    Currently, the way this works is we use popular search terms and just take the top shorts. For now, this seems cool and works well! :)
+    """
     def __init__(self) -> None:
-        self.base_url = os.getenv('YOUTUBE_API_BASE_URL')
-        self.api_key = os.getenv('YOUTUBE_API_KEY')
-        self.channels = [Channel('https://www.youtube.com/@Ptvmedia')
-]
+        # self.base_url = os.getenv('YOUTUBE_API_BASE_URL')
+        # self.api_key = os.getenv('YOUTUBE_API_KEY')
+        # self.channels = [Channel('https://www.youtube.com/channel/UCWl22-J_YvoMp3Y6RyWWIow')]
+
+        self.search_terms = ['Popular shorts']
+
+        
 
     def get_top_5_most_viewed_and_liked_shorts(self, channel_id) -> list[Short]:
-        # TODO: make this actually give the highest viewing shorts lmao
         list=[]
         counter=0
-        for url in self.channels[0].video_urls:
+        results = Search(self.search_terms[0])
+        for yt in results:
             if counter>5:
                 break
-            if self.check_video_is_short(url):
-                short = Short(url)
+            if self.check_video_is_short(yt.watch_url):
+                short = Short(yt.watch_url, title=yt.title, thumbnail_url=yt.thumbnail_url)
                 list.append(short)
                 counter+=1
         return list

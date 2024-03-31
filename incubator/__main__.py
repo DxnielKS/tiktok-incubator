@@ -50,6 +50,8 @@ def post_next_youtube_short():
 
     description = f"Dayum 😳 {hashtags}"
 
+    # TODO: use youtube short title to make my caption
+
     try:
     # upload_local_video(f'{title}.mp4', description, cookies='daniel-cookies.txt')
         import shlex
