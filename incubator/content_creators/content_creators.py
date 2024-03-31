@@ -60,13 +60,13 @@ class YoutubeVideoScraper:
         for yt in results.results:
             if counter>5:
                 break
-            if self.check_video_is_short(yt.watch_url):
+            if self.check_video_is_short(yt):
                 short = Short(yt.watch_url, title=yt.title, thumbnail_url=yt.thumbnail_url)
                 list.append(short)
                 counter+=1
         return list
     
-    def check_video_is_short(self, video_url):
+    def check_video_is_short(self, video):
         """
         Check if a YouTube video is a short by examining its duration.
 
@@ -77,9 +77,6 @@ class YoutubeVideoScraper:
         bool: True if the video is a short, False otherwise.
         """
         try:
-            # Use pytube to get video details
-            video = YouTube(video_url)
-            # YouTube Shorts are typically less than 60 seconds
             if video.length < 60:
                 return True
             else:
