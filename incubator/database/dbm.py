@@ -9,8 +9,9 @@ _LOGGER = logging.getLogger('incubator.database')
 
 def check_if_story_posted(story, supabase_client=inject_supabase_client()) -> bool:
     hashed = generate_unique_id(story)
+    return False
     data = supabase_client.table('videos_posted').select("*").eq('video_hash', hashed).execute()
-    return len(data.data) > 0
+    # return len(data.data) > 0
 
 
 def log_story_posted(title, story, supabase_client=inject_supabase_client()) -> bool:

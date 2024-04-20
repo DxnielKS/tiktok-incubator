@@ -190,6 +190,8 @@ def schedule_tasks_for_day():
 #                 cookies=cookies,
 #                 )
 
+# LOL THIS CODE IS SO BAD
+
 def main():
 
     global story_queue, short_queue
