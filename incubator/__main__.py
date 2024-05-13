@@ -72,7 +72,7 @@ def post_next_youtube_short():
         import shlex
         description_escaped = shlex.quote(description)
         os.system(f'cd TiktokAutoUploader && python cli.py upload --user clipscartel -yt \\"{url}\\" --title {description_escaped}')
-        # log_short_posted(title=title, story=content)
+        log_short_posted(url=url)
     except Exception as e:
         _LOGGER.error(f'Failed to upload, remove video and log video. {e}')
 
@@ -102,7 +102,7 @@ def post_next_story():
     output_file = f"final-videos/video.mp4"  # The output filename
 
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
-    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryou #viral #foryoupage #tiktok #fy #trending"
+    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryou #foryoupage #tiktok"
 
     console.print('[light_green] Making caption')
 

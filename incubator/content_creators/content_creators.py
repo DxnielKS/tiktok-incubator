@@ -54,18 +54,18 @@ class YoutubeVideoScraper:
         
 
     def get_top_5_most_viewed_and_liked_shorts(self) -> list[Short]:
-        list=[]
+        list = []
         counter=0
         results = Search(self.search_terms[0])
         for yt in results.results:
-            if counter>5:
+            if counter > 5:
                 break
             if self.check_video_is_short(yt):
                 short = Short(yt.watch_url, title=yt.title, thumbnail_url=yt.thumbnail_url)
                 list.append(short)
-                counter+=1
+                counter += 1
         return list
-    
+
     def check_video_is_short(self, video):
         """
         Check if a YouTube video is a short by examining its duration.
