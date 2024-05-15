@@ -1,6 +1,7 @@
 from incubator.stories.story import Story
 from incubator.content.short import Short
 from incubator.database.dbm import check_if_story_posted
+from incubator.database.dbm import check_if_short_posted
 import praw
 import os
 import requests
@@ -51,7 +52,7 @@ class YoutubeVideoScraper:
 
         self.search_terms = ['Popular shorts']
 
-        
+
 
     def get_top_5_most_viewed_and_liked_shorts(self) -> list[Short]:
         list = []
@@ -60,7 +61,7 @@ class YoutubeVideoScraper:
         for yt in results.results:
             if counter > 5:
                 break
-            if self.check_video_is_short(yt):
+            if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):
                 short = Short(yt.watch_url, title=yt.title, thumbnail_url=yt.thumbnail_url)
                 list.append(short)
                 counter += 1
