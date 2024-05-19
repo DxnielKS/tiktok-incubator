@@ -45,7 +45,7 @@ def post_next_youtube_short():
 
     console = Console()
 
-    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryou #viral #foryoupage #tiktok #fy #trending"
+    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryoupage"
 
     console.print('[light_green] Making caption')
 
@@ -102,7 +102,7 @@ def post_next_story():
     output_file = f"final-videos/video.mp4"  # The output filename
 
     # TODO: OPTIMISE HASHTAGS FOR MOST VIEWS
-    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp #foryou #foryoupage #tiktok"
+    hashtags = "#redditstories #reddit #redditstorytimes #redditreadings #askreddit #redditfeeds #xyzbca #xybca #fyp"
 
     console.print('[light_green] Making caption')
 
@@ -200,7 +200,7 @@ def main():
     story_getter = RedditScraper()
     short_getter = YoutubeVideoScraper()
     stories = story_getter.get_top_5_posts()
-    shorts = short_getter.get_top_5_most_viewed_and_liked_shorts()
+    shorts = short_getter.get_top_most_viewed_and_liked_shorts()
     story_queue += stories
     short_queue += shorts
 
@@ -214,7 +214,7 @@ def main():
         if current_time.hour == 0 and current_time.minute == 0:
             schedule_tasks_for_day()
             stories = story_getter.get_top_5_posts()
-            shorts = short_getter.get_top_5_most_viewed_and_liked_shorts()
+            shorts = short_getter.get_top_most_viewed_and_liked_shorts()
             story_queue += stories
             short_queue += shorts
         schedule.run_pending()

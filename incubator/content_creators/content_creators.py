@@ -50,15 +50,36 @@ class YoutubeVideoScraper:
         # self.api_key = os.getenv('YOUTUBE_API_KEY')
         # self.channels = [Channel('https://www.youtube.com/channel/UCWl22-J_YvoMp3Y6RyWWIow')]
 
-        self.search_terms = ['Popular shorts']
+        self.search_terms = ['Popular shorts', 'inspirational shorts', 'cliffe knechtle']
 
 
 
-    def get_top_5_most_viewed_and_liked_shorts(self) -> list[Short]:
+    def get_top_most_viewed_and_liked_shorts(self) -> list[Short]:
         list = []
         counter=0
-        results = Search(self.search_terms[0])
-        for yt in results.results:
+        results1 = Search(self.search_terms[0])
+        results2 = Search(self.search_terms[1])
+        results3 = Search(self.search_terms[2])
+
+        for yt in results1.results:
+            if counter > 5:
+                break
+            if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):
+                short = Short(yt.watch_url, title=yt.title, thumbnail_url=yt.thumbnail_url)
+                list.append(short)
+                counter += 1
+        counter=0
+
+        for yt in results2.results:
+            if counter > 5:
+                break
+            if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):
+                short = Short(yt.watch_url, title=yt.title, thumbnail_url=yt.thumbnail_url)
+                list.append(short)
+                counter += 1
+        counter=0
+
+        for yt in results3.results:
             if counter > 5:
                 break
             if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):
