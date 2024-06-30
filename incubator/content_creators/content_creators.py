@@ -61,7 +61,7 @@ class YoutubeVideoScraper:
         results2 = Search(self.search_terms[1])
         results3 = Search(self.search_terms[2])
 
-        for yt in results1.results:
+        for yt in results1.results and counter<100:
             if counter > 5:
                 break
             if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):
@@ -70,7 +70,7 @@ class YoutubeVideoScraper:
                 counter += 1
         counter=0
 
-        for yt in results2.results:
+        for yt in results2.results and counter<100:
             if counter > 5:
                 break
             if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):
@@ -79,7 +79,7 @@ class YoutubeVideoScraper:
                 counter += 1
         counter=0
 
-        for yt in results3.results:
+        for yt in results3.results and counter<100:
             if counter > 5:
                 break
             if self.check_video_is_short(yt) and not check_if_short_posted(yt.watch_url):

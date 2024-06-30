@@ -20,3 +20,4 @@ supabase==2.3.7
 undetected_chromedriver==3.5.5
 google-api-python-client
 pytube
+hyperdx-opentelemetry==0.1.0
