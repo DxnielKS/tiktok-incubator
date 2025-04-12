@@ -1,37 +1,39 @@
 # GPT Tiktok Reddit Stories
 
-Usually virtual environments should NOT be kept on github repositories.
+Usually virtual environments should NOT be kept on github repositories lmao.
 
 ## How to use:
 
 - Get your accounts cookies and store in a file locally named cookies.txt
 - Store videos in mp4 format locally.
-- Run ```sudo apt-get install fonts-poppins```
+- Run `sudo apt-get install fonts-poppins`
 - Install ImageMagick `brew install imagemagick`
 - IF ON MAC:
   - Install `brew install ffmpeg`
 - Go to eleven labs and get an API key and put it in the env file as ```python ELEVENLABS_API_KEY=<APIKEY>```
 - run `python3 -m incubator`
--    sudo apt-get install ghostscript
+-    `sudo apt-get install ghostscript`
 
-sudo apt-get update
-sudo apt-get install build-essential checkinstall
-sudo apt-get install libx11-dev libxext-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev
+`sudo apt-get update`
+`sudo apt-get install build-essential checkinstall`
+`sudo apt-get install libx11-dev libxext-dev zlib1g-dev libpng-dev libjpeg-dev libfreetype6-dev libxml2-dev`
 
-wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+`wget https://www.imagemagick.org/download/ImageMagick.tar.gz`
 
-tar xvzf ImageMagick.tar.gz
+`tar xvzf ImageMagick.tar.gz`
 
-cd ImageMagick-7*
+`cd ImageMagick-7*`
 
-./configure
+`./configure`
 
-make
+`sudo make install`
 
-sudo make install
+`sudo ldconfig /usr/local/lib`
 
-sudo ldconfig /usr/local/lib
+`magick -version`
 
-magick -version
+`sudo apt-get install libfreetype6-dev`
 
-sudo apt-get install libfreetype6-dev
+### 12.4.2025
+
+- this is genuinely horrible code to read ahahahahah, funny how even old code makes you cringe
